@@ -1,6 +1,6 @@
-$(document).ready(function() {
+/***************** Waypoints ******************/
 
-	/***************** Waypoints ******************/
+$(document).ready(function() {
 
 	$('.wp1').waypoint(function() {
 		$('.wp1').addClass('animated fadeInLeft');
@@ -8,92 +8,136 @@ $(document).ready(function() {
 		offset: '75%'
 	});
 	$('.wp2').waypoint(function() {
-		$('.wp2').addClass('animated fadeInDown');
+		$('.wp2').addClass('animated fadeInUp');
 	}, {
 		offset: '75%'
 	});
 	$('.wp3').waypoint(function() {
-		$('.wp3').addClass('animated bounceInDown');
+		$('.wp3').addClass('animated fadeInDown');
 	}, {
-		offset: '75%'
+		offset: '55%'
 	});
 	$('.wp4').waypoint(function() {
 		$('.wp4').addClass('animated fadeInDown');
 	}, {
 		offset: '75%'
 	});
-
-	/***************** Flickity ******************/
-
-	$('#featuresSlider').flickity({
-		cellAlign: 'left',
-		contain: true,
-		prevNextButtons: false
+	$('.wp5').waypoint(function() {
+		$('.wp5').addClass('animated fadeInUp');
+	}, {
+		offset: '75%'
 	});
-
-	$('#showcaseSlider').flickity({
-		cellAlign: 'left',
-		contain: true,
-		prevNextButtons: false,
-		imagesLoaded: true
-	});
-
-	/***************** Fancybox ******************/
-
-	$(".youtube-media").on("click", function(e) {
-		var jWindow = $(window).width();
-		if (jWindow <= 768) {
-			return;
-		}
-		$.fancybox({
-			href: this.href,
-			padding: 4,
-			type: "iframe",
-			'href': this.href.replace(new RegExp("watch\\?v=", "i"), 'v/'),
-		});
-		return false;
+	$('.wp6').waypoint(function() {
+		$('.wp6').addClass('animated fadeInDown');
+	}, {
+		offset: '75%'
 	});
 
 });
 
-$(document).ready(function() {
-	$("a.single_image").fancybox({
-		padding: 4,
+/***************** Slide-In Nav ******************/
+
+$(window).load(function() {
+
+	$('.nav_slide_button').click(function() {
+		$('.pull').slideToggle();
 	});
-});
 
-/***************** Nav Transformicon ******************/
-
-/* When user clicks the Icon */
-$(".nav-toggle").click(function() {
-	$(this).toggleClass("active");
-	$(".overlay-boxify").toggleClass("open");
-});
-
-/* When user clicks a link */
-$(".overlay ul li a").click(function() {
-	$(".nav-toggle").toggleClass("active");
-	$(".overlay-boxify").toggleClass("open");
-});
-
-/* When user clicks outside */
-$(".overlay").click(function() {
-	$(".nav-toggle").toggleClass("active");
-	$(".overlay-boxify").toggleClass("open");
 });
 
 /***************** Smooth Scrolling ******************/
 
-$('a[href*=#]:not([href=#])').click(function() {
-	if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
+$(function() {
 
-		var target = $(this.hash);
-		target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-		if (target.length) {
-			$('html,body').animate({
-				scrollTop: target.offset().top
-			}, 2000);
-			return false;
+	$('a[href*=#]:not([href=#])').click(function() {
+		if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
+
+			var target = $(this.hash);
+			target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+			if (target.length) {
+				$('html,body').animate({
+					scrollTop: target.offset().top
+				}, 2000);
+				return false;
+			}
 		}
-	}
+	});
+
+});
+
+/***************** Nav Transformicon ******************/
+
+document.querySelector("#nav-toggle").addEventListener("click", function() {
+	this.classList.toggle("active");
+});
+
+/***************** Overlays ******************/
+
+$(document).ready(function(){
+    if (Modernizr.touch) {
+        // show the close overlay button
+        $(".close-overlay").removeClass("hidden");
+        // handle the adding of hover class when clicked
+        $(".img").click(function(e){
+            if (!$(this).hasClass("hover")) {
+                $(this).addClass("hover");
+            }
+        });
+        // handle the closing of the overlay
+        $(".close-overlay").click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            if ($(this).closest(".img").hasClass("hover")) {
+                $(this).closest(".img").removeClass("hover");
+            }
+        });
+    } else {
+        // handle the mouseenter functionality
+        $(".img").mouseenter(function(){
+            $(this).addClass("hover");
+        })
+        // handle the mouseleave functionality
+        .mouseleave(function(){
+            $(this).removeClass("hover");
+        });
+    }
+});
+
+/***************** Flexsliders ******************/
+
+$(window).load(function() {
+
+	$('#portfolioSlider').flexslider({
+		animation: "slide",
+		directionNav: false,
+		controlNav: true,
+		touch: false,
+		pauseOnHover: true,
+		start: function() {
+			$.waypoints('refresh');
+		}
+	});
+
+	$('#servicesSlider').flexslider({
+		animation: "slide",
+		directionNav: false,
+		controlNav: true,
+		touch: true,
+		pauseOnHover: true,
+		start: function() {
+			$.waypoints('refresh');
+		}
+	});
+
+	$('#teamSlider').flexslider({
+		animation: "slide",
+		directionNav: false,
+		controlNav: true,
+		touch: true,
+		pauseOnHover: true,
+		start: function() {
+			$.waypoints('refresh');
+		}
+	});
+
 });
